@@ -30,7 +30,7 @@ public class ProveedorService {
     //Intenta buscar en el repositorio por id, si no se encuentra lanza la excepción no implementada que concatena el string con el id
     public ProveedorModel updateById(ProveedorModel request, Long id) {
         ProveedorModel proveedor = proveedorRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Usuario no encontrado con ID: " + id));
+                .orElseThrow(() -> new NoSuchElementException("Proveedor no encontrado con ID: " + id));
 
         proveedor.setNombre(request.getNombre());
         proveedor.setDireccion(request.getDireccion());
@@ -40,4 +40,14 @@ public class ProveedorService {
         return proveedorRepository.save(proveedor);
 
     }
+
+    public Boolean deleteProveedor(Long id){
+        try{
+            proveedorRepository.deleteById(id);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
 }

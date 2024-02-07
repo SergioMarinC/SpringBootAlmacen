@@ -3,12 +3,12 @@ package com.DAM_SergioMarin.SpringBootAlmacen.Model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Proveedor")
-public class ProveedorModel {
+@Table(name = "Cliente")
+public class ClienteModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_proveedor;
+    private Long id_cliente;
 
     @Column
     private String nombre;
@@ -21,12 +21,12 @@ public class ProveedorModel {
 
     @Column(nullable = false)
     private String email;
-    public Long getId_proveedor() {
-        return id_proveedor;
+    public Long getId_cliente() {
+        return id_cliente;
     }
 
-    public void setId_proveedor(Long id_proveedor) {
-        this.id_proveedor = id_proveedor;
+    public void setId_cliente(Long id_cliente) {
+        this.id_cliente = id_cliente;
     }
 
     public String getNombre() {

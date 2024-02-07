@@ -1,0 +1,37 @@
+Tabla Producto:
+CREATE TABLE Producto (
+    ID_Producto INT PRIMARY KEY,
+    Nombre VARCHAR(255),
+    Tipo VARCHAR(50),
+    Precio DECIMAL(10, 2),
+    Cantidad_Stock INT,
+    ID_Proveedor INT,
+    FOREIGN KEY (ID_Proveedor) REFERENCES Proveedor(ID_Proveedor)
+);
+
+Tabla Proveedor:
+CREATE TABLE Proveedor (
+    ID_Proveedor INT PRIMARY KEY,
+    Nombre VARCHAR(255),
+    Direccion VARCHAR(255),
+    Telefono VARCHAR(20)
+);
+
+Tabla Cliente:
+CREATE TABLE Cliente (
+    ID_Cliente INT PRIMARY KEY,
+    Nombre VARCHAR(255),
+    Direccion VARCHAR(255),
+    Telefono VARCHAR(20)
+);
+
+Tabla Compra (para manejar la relación muchos a muchos entre Cliente y Producto):
+CREATE TABLE Compra (
+    ID_Compra INT PRIMARY KEY,
+    ID_Cliente INT,
+    ID_Producto INT,
+    Cantidad INT,
+    Fecha_Compra DATE,
+    FOREIGN KEY (ID_Cliente) REFERENCES Cliente(ID_Cliente),
+    FOREIGN KEY (ID_Producto) REFERENCES Producto(ID_Producto)
+);
