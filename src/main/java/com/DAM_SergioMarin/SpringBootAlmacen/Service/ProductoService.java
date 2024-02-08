@@ -44,7 +44,7 @@
         }
 
         //Intenta buscar en el repositorio por id, si no se encuentra lanza la excepción no implementada que concatena el string con el id
-        public ProductoModel updateById(ProductoModel request, Long id, Long idProveedor) {
+        public ProductoModel updateById(ProductoRequest request, Long id) {
             ProductoModel producto = productoRepository.findById(id)
                     .orElseThrow(() -> new NoSuchElementException("Producto no encontrado con ID: " + id));
 
@@ -53,8 +53,8 @@
             producto.setPrecio(request.getPrecio());
             producto.setStock(request.getStock());
 
-            ProveedorModel nuevoProveedor = proveedorRepository.findById(idProveedor)
-                    .orElseThrow(() -> new NoSuchElementException("Proveedor no encontrado con ID: " + idProveedor));
+            ProveedorModel nuevoProveedor = proveedorRepository.findById(request.getId_proveedor())
+                    .orElseThrow(() -> new NoSuchElementException("Proveedor no encontrado con ID: " + request.getId_proveedor()));
 
             // Actualizar el proveedor del producto
             producto.setProveedor(nuevoProveedor);

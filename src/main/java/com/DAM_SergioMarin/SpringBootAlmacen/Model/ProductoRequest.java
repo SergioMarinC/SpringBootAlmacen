@@ -7,7 +7,7 @@ public class ProductoRequest {
     private String nombre;
     private String tipo;
     private BigDecimal precio;
-    private Integer stock;
+    private BigDecimal stock;
     private Long id_proveedor;
 
     public String getNombre() {
@@ -34,11 +34,11 @@ public class ProductoRequest {
         this.precio = precio;
     }
 
-    public Integer getStock() {
+    public BigDecimal getStock() {
         return stock;
     }
 
-    public void setStock(Integer stock) {
+    public void setStock(BigDecimal stock) {
         this.stock = stock;
     }
 

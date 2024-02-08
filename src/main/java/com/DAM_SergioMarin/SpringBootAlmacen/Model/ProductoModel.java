@@ -23,8 +23,8 @@ public class ProductoModel {
     @Column(precision = 10, scale = 2)
     private BigDecimal precio;
 
-    @Column
-    private Integer stock;
+    @Column(precision = 10, scale = 3)
+    private BigDecimal stock;
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_proveedor")
@@ -62,11 +62,11 @@ public class ProductoModel {
         this.precio = precio;
     }
 
-    public Integer getStock() {
+    public BigDecimal getStock() {
         return stock;
     }
 
-    public void setStock(Integer stock) {
+    public void setStock(BigDecimal stock) {
         this.stock = stock;
     }
 

@@ -1,6 +1,10 @@
 package com.DAM_SergioMarin.SpringBootAlmacen.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "Proveedor")
@@ -21,10 +25,15 @@ public class ProveedorModel {
 
     @Column(nullable = false)
     private String email;
+
+
+    @OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<ProductoModel> productos = new ArrayList<>();
+
     public Long getId_proveedor() {
         return id_proveedor;
     }
-
     public void setId_proveedor(Long id_proveedor) {
         this.id_proveedor = id_proveedor;
     }
@@ -59,5 +68,13 @@ public class ProveedorModel {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<ProductoModel> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(List<ProductoModel> productos) {
+        this.productos = productos;
     }
 }

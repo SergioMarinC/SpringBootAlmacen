@@ -32,9 +32,8 @@ public class ProductoController {
     }
 
     @PutMapping(path = "/{id}")
-    public ProductoModel updateUserById(@RequestBody ProductoModel request, @PathVariable("id") Long id){
-        Long idProveedor = request.getId_proveedor();
-        return  this.productoService.updateById(request, id, idProveedor);
+    public ProductoModel updateUserById(@RequestBody ProductoRequest request, @PathVariable("id") Long id){
+        return  this.productoService.updateById(request, id);
     }
 
     @DeleteMapping(path = "/{id}")
