@@ -1,5 +1,6 @@
 package com.DAM_SergioMarin.SpringBootAlmacen.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -78,7 +79,9 @@ public class ProductoModel {
     }
 
     //Comprueba si es null antes de realizar la consulta
+    @JsonIgnore
     public Long getId_proveedor(){
         return proveedor != null ? proveedor.getId_proveedor() : null;
     }
+
 }
