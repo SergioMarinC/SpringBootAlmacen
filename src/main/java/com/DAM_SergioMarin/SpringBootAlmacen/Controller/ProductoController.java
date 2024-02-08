@@ -1,6 +1,7 @@
 package com.DAM_SergioMarin.SpringBootAlmacen.Controller;
 
 import com.DAM_SergioMarin.SpringBootAlmacen.Model.ProductoModel;
+import com.DAM_SergioMarin.SpringBootAlmacen.Model.ProductoRequest;
 import com.DAM_SergioMarin.SpringBootAlmacen.Service.ProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +22,8 @@ public class ProductoController {
     }
 
     @PostMapping
-    public ProductoModel saveProducto(@RequestBody ProductoModel producto) {
-        return this.productoService.saveProducto(producto);
+    public ProductoModel saveProducto(@RequestBody ProductoRequest productoRequest) {
+        return this.productoService.saveProducto(productoRequest);
     }
 
     @GetMapping(path = "/{id}")

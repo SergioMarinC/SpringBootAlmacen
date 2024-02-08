@@ -1,60 +1,74 @@
-package com.DAM_SergioMarin.SpringBootAlmacen.Service;
+    package com.DAM_SergioMarin.SpringBootAlmacen.Service;
 
-import com.DAM_SergioMarin.SpringBootAlmacen.Model.ProductoModel;
-import com.DAM_SergioMarin.SpringBootAlmacen.Model.ProveedorModel;
-import com.DAM_SergioMarin.SpringBootAlmacen.Repository.IProductoRepository;
-import com.DAM_SergioMarin.SpringBootAlmacen.Repository.IProveedorRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+    import com.DAM_SergioMarin.SpringBootAlmacen.Model.ProductoModel;
+    import com.DAM_SergioMarin.SpringBootAlmacen.Model.ProductoRequest;
+    import com.DAM_SergioMarin.SpringBootAlmacen.Model.ProveedorModel;
+    import com.DAM_SergioMarin.SpringBootAlmacen.Repository.IProductoRepository;
+    import com.DAM_SergioMarin.SpringBootAlmacen.Repository.IProveedorRepository;
+    import org.springframework.beans.factory.annotation.Autowired;
+    import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+    import java.util.ArrayList;
+    import java.util.NoSuchElementException;
+    import java.util.Optional;
 
-@Service
-public class ProductoService {
-    @Autowired
-    IProductoRepository productoRepository;
-    IProveedorRepository proveedorRepository;
+    @Service
+    public class ProductoService {
+        @Autowired
+        IProductoRepository productoRepository;
+        @Autowired
+        IProveedorRepository proveedorRepository;
 
-    public ArrayList<ProductoModel> getProductos(){
-        return (ArrayList<ProductoModel>) productoRepository.findAll();
-    }
+        public ArrayList<ProductoModel> getProductos(){
+            return (ArrayList<ProductoModel>) productoRepository.findAll();
+        }
 
-    public ProductoModel saveProducto(ProductoModel cliente){
-        return productoRepository.save(cliente);
-    }
+        public ProductoModel saveProducto(ProductoRequest productoRequest){
+            ProductoModel producto = new ProductoModel();
+            producto.setNombre(productoRequest.getNombre());
+            producto.setTipo(productoRequest.getTipo());
+            producto.setPrecio(productoRequest.getPrecio());
+            producto.setStock(productoRequest.getStock());
 
-    public Optional<ProductoModel> getById(Long id) {
-        return productoRepository.findById(id);
-    }
+            Long idProveedor = productoRequest.getId_proveedor();
+            ProveedorModel proveedor = proveedorRepository.findById(idProveedor)
+                    .orElseThrow(() -> new NoSuchElementException("Proveedor no encontrado con ID: " + idProveedor));
 
-    //Intenta buscar en el repositorio por id, si no se encuentra lanza la excepción no implementada que concatena el string con el id
-    public ProductoModel updateById(ProductoModel request, Long id, Long idProveedor) {
-        ProductoModel producto = productoRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Producto no encontrado con ID: " + id));
+            producto.setProveedor(proveedor);
 
-        producto.setNombre(request.getNombre());
-        producto.setTipo(request.getTipo());
-        producto.setPrecio(request.getPrecio());
-        producto.setStock(request.getStock());
+            return productoRepository.save(producto);
+        }
 
-        ProveedorModel nuevoProveedor = proveedorRepository.findById(idProveedor)
-                .orElseThrow(() -> new NoSuchElementException("Proveedor no encontrado con ID: " + idProveedor));
+        public Optional<ProductoModel> getById(Long id) {
+            return productoRepository.findById(id);
+        }
 
-        // Actualizar el proveedor del producto
-        producto.setProveedor(nuevoProveedor);
+        //Intenta buscar en el repositorio por id, si no se encuentra lanza la excepción no implementada que concatena el string con el id
+        public ProductoModel updateById(ProductoModel request, Long id, Long idProveedor) {
+            ProductoModel producto = productoRepository.findById(id)
+                    .orElseThrow(() -> new NoSuchElementException("Producto no encontrado con ID: " + id));
 
-        return productoRepository.save(producto);
+            producto.setNombre(request.getNombre());
+            producto.setTipo(request.getTipo());
+            producto.setPrecio(request.getPrecio());
+            producto.setStock(request.getStock());
 
-    }
+            ProveedorModel nuevoProveedor = proveedorRepository.findById(idProveedor)
+                    .orElseThrow(() -> new NoSuchElementException("Proveedor no encontrado con ID: " + idProveedor));
 
-    public Boolean deleteProducto(Long id){
-        try {
-            productoRepository.deleteById(id);
-            return true;
-        }catch (Exception e) {
-            return false;
+            // Actualizar el proveedor del producto
+            producto.setProveedor(nuevoProveedor);
+
+            return productoRepository.save(producto);
+
+        }
+
+        public Boolean deleteProducto(Long id){
+            try {
+                productoRepository.deleteById(id);
+                return true;
+            }catch (Exception e) {
+                return false;
+            }
         }
     }
-}
