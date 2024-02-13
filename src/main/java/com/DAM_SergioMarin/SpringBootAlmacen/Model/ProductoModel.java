@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "Producto")
@@ -29,6 +31,10 @@ public class ProductoModel {
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_proveedor")
     private ProveedorModel proveedor;
+
+    @OneToMany(mappedBy = "producto")
+    @JsonIgnore
+    private Set<CompraModel> compras = new HashSet<>();
 
     public Long getId_producto() {
         return id_producto;
@@ -84,4 +90,11 @@ public class ProductoModel {
         return proveedor != null ? proveedor.getId_proveedor() : null;
     }
 
+    public Set<CompraModel> getCompras() {
+        return compras;
+    }
+
+    public void setCompras(Set<CompraModel> compras) {
+        this.compras = compras;
+    }
 }
